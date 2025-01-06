@@ -22,13 +22,13 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler
-    public Result<String> exceptionHandler(BaseException ex){
+    public Result exceptionHandler(BaseException ex){
         log.error("异常信息：{}", ex.getMessage());
         return Result.error(ex.getMessage());
     }
 
     @ExceptionHandler
-    public Result<String> duplicateUsername(SQLIntegrityConstraintViolationException ex){
+    public Result duplicateUsername(SQLIntegrityConstraintViolationException ex){
         log.error("异常信息：{}", ex.getMessage());
         if (ex.getMessage().contains("Duplicate entry") && ex.getMessage().contains("for key 'idx_username'")) {
             String username = ex.getMessage().split(" ")[2];
