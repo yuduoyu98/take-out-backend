@@ -1,5 +1,8 @@
 package com.sky.context;
 
+/**
+ * ThreadLocal保存当前线程的用户id
+ */
 public class BaseContext {
 
     public static ThreadLocal<Long> threadLocal = new ThreadLocal<>();
