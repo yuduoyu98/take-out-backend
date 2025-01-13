@@ -98,4 +98,21 @@ public class EmployeeController {
         PageResult result = employeeService.pageQuery(employeePageQueryDTO);
         return Result.success(result);
     }
+
+
+    /**
+     * 启用、禁用员工账号
+     * RESTful API 的设计原则之一: 资源的唯一标识(employee id)应该放在URL路径中，而 操作或状态可以作为路径的一部分(status)
+     * @param id
+     * @param status
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("启用、禁用员工账号")
+    public Result updateEmployeeStatus(@RequestParam Long id, @PathVariable Integer status) {
+        log.info("修改员工状态, id={}, status={}", id, status);
+
+        employeeService.updateEmployeeStatus(id, status);
+        return Result.success();
+    }
 }
