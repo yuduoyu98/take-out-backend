@@ -85,6 +85,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeMapper.insert(employee);
     }
 
+    /**
+     * 员工分页查询
+     * @param employeePageQueryDTO
+     * @return
+     */
     @Override
     public PageResult pageQuery(EmployeePageQueryDTO employeePageQueryDTO) {
         // select * from employee where name like '%name%' limit (page-1)*pageSize, pageSize
@@ -93,6 +98,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return new PageResult(page.getTotal(), page.getResult());
     }
 
+    /**
+     * 根据id修改员工状态
+     * @param id
+     * @param status
+     */
     @Override
     public void updateEmployeeStatus(Long id, Integer status) {
         Employee employee = Employee.builder()
@@ -102,6 +112,18 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .updateUser(BaseContext.getCurrentId())
                 .build();
         employeeMapper.update(employee);
+    }
+
+    /**
+     * 根据id查询员工
+     * @param id
+     * @return
+     */
+    @Override
+    public Employee getEmployeeById(Long id) {
+        Employee employee = employeeMapper.selectById(id);
+        employee.setPassword("****"); //脱敏
+        return employee;
     }
 
 }
