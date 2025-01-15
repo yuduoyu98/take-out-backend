@@ -23,11 +23,25 @@
     -->
 
     <!-- keyProperty 赋值给entity的哪个属性；useGeneratedKeys 使用数据库自动生成的主键值 -->
-    <insert id = "insert" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO dish(name, category_id, price, image, description, status, create_time, update_time, create_user, update_user)
-        VALUES
-        (#{name}, #{categoryId}, #{price}, #{image}, #{description}, #{status}, #{createTime}, #{updateTime}, #{createUser}, #{updateUser})
+        VALUES (#{name}, #{categoryId}, #{price}, #{image}, #{description}, #{status}, #{createTime}, #{updateTime}, #{createUser}, #{updateUser})
     </insert>
+
+    <update id="update">
+        UPDATE dish
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="categoryId != null">category_id = #{categoryId},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateUser != null">update_user = #{updateUser},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
 
     <delete id="deleteDishesByIds">
         DELETE FROM dish
@@ -39,8 +53,8 @@
 
     <select id="pageQuery" resultType="com.sky.vo.DishVO">
         SELECT
-            d.*,
-            c.name as category_name
+        d.*,
+        c.name as category_name
         FROM dish d
         LEFT OUTER JOIN category c
         ON d.category_id = c.id
