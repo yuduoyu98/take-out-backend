@@ -75,7 +75,7 @@ public class DishController {
     @PostMapping("/status/{status}")
     @ApiOperation("菜品起售、停售")
     public Result updateDishStatus(@RequestParam Long id, @PathVariable Integer status) {
-        log.info("菜品起售、停售：{}", id);
+        log.info("菜品状态：{} 修改为：{}, ", id, status == 1 ? "起售" : "停售");
         dishService.updateDishStatus(id, status);
         return Result.success();
     }

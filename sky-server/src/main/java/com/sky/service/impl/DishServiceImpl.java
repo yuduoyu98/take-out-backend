@@ -110,12 +110,11 @@ public class DishServiceImpl implements DishService {
      */
     @Override
     public void updateDishStatus(Long id, Integer status) {
-        // todo
         Dish dish = Dish.builder()
                 .id(id)
                 .status(status)
                 .build();
-//        dishMapper.update(dish);
+        dishMapper.update(dish);
     }
 
     /**
