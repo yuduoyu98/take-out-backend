@@ -72,4 +72,13 @@
         ORDER BY d.create_time DESC
     </select>
 
+    <select id="list" resultType="com.sky.entity.Dish">
+        SELECT * FROM dish
+        <where>
+            <if test="status != null">AND status = #{status}</if>
+            <if test="categoryId != null">AND category_id = #{categoryId}</if>
+        </where>
+        ORDER BY create_time DESC
+    </select>
+
 </mapper>

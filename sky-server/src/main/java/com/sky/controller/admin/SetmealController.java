@@ -46,7 +46,7 @@ public class SetmealController {
      */
     @GetMapping("/page")
     @ApiOperation("分页查询")
-    public Result<PageResult> pageQuery(SetmealPageQueryDTO setmealPageQueryDTO){
+    public Result<PageResult> pageQuery(SetmealPageQueryDTO setmealPageQueryDTO) {
         log.info("分页查询套餐：{}", setmealPageQueryDTO);
         PageResult pageResult = setmealService.pageQuery(setmealPageQueryDTO);
         return Result.success(pageResult);
@@ -59,7 +59,7 @@ public class SetmealController {
      */
     @DeleteMapping
     @ApiOperation("批量删除套餐")
-    public Result batchDelete(@RequestParam List<Long> ids){
+    public Result batchDelete(@RequestParam List<Long> ids) {
         log.info("批量删除套餐：{}", ids);
         setmealService.batchDelete(ids);
         return Result.success();
@@ -72,7 +72,7 @@ public class SetmealController {
      */
     @GetMapping("/{id}")
     @ApiOperation("根据id查询套餐")
-    public Result<SetmealVO> getById(@PathVariable Long id){
+    public Result<SetmealVO> getById(@PathVariable Long id) {
         log.info("根据id查询套餐：{}", id);
         SetmealVO setmealVO = setmealService.getById(id);
         return Result.success(setmealVO);
@@ -85,9 +85,23 @@ public class SetmealController {
      */
     @PutMapping
     @ApiOperation("修改套餐")
-    public Result update(@RequestBody SetmealDTO setmealDTO){
+    public Result update(@RequestBody SetmealDTO setmealDTO) {
         log.info("更新套餐：{}", setmealDTO);
         setmealService.update(setmealDTO);
+        return Result.success();
+    }
+
+    /**
+     * 套餐起售、停售
+     * @param status
+     * @param id
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    @ApiOperation("套餐起售、停售")
+    public Result changeStatus(@PathVariable Integer status, @RequestParam Long id) {
+        log.info("套餐状态：{} 修改为：{}, ", id, status == 1 ? "启售" : "停售");
+        setmealService.changeStatus(id, status);
         return Result.success();
     }
 }

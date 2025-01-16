@@ -61,10 +61,18 @@ public interface DishMapper {
     void update(Dish dish);
 
     /**
-     * 根据分类ID查询菜品
-     * @param categoryId
+     * 返回符合要求的菜品列表
+     * 支持根据category_id, status进行查询
+     * @param dish
      * @return
      */
-    @Select("SELECT * FROM dish WHERE category_id = #{categoryId}")
-    List<Dish> selectByCategoryId(Long categoryId);
+    List<Dish> list(Dish dish);
+
+    /**
+     * 根据套餐内的菜品
+     * @param setmealId
+     * @return
+     */
+    @Select("SELECT d.* FROM setmeal_dish sd LEFT OUTER JOIN dish d ON sd.dish_id = d.id WHERE sd.setmeal_id = #{setmealId}")
+    List<Dish> getBySetmealId(Long setmealId);
 }
