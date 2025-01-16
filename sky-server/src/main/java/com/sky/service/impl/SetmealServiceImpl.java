@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -91,5 +92,27 @@ public class SetmealServiceImpl implements SetmealService {
         List<SetmealDish> setmealDishes = setmealDishMapper.selectBySetmealId(id);
         setmealVO.setSetmealDishes(setmealDishes);
         return setmealVO;
+    }
+
+    /**
+     * 修改套餐
+     * @param setmealDTO
+     */
+    @Override
+    @Transactional
+    public void update(SetmealDTO setmealDTO) {
+        // 更新套餐
+        Setmeal setmeal = new Setmeal();
+        BeanUtils.copyProperties(setmealDTO, setmeal);
+        setmealMapper.update(setmeal);
+
+        // 更新套餐菜品关系
+        Long setmealId = setmeal.getId();
+        // 1. 删除原先绑定的套餐菜品关系
+        setmealDishMapper.deleteBySetmealIds(Collections.singletonList(setmealId));
+        // 2. 保存新的套餐菜品关系
+        List<SetmealDish> setmealDishes = setmealDTO.getSetmealDishes();
+        setmealDishes.forEach(setmealDish -> setmealDish.setSetmealId(setmealId));
+        setmealDishMapper.insertBatch(setmealDishes);
     }
 }
