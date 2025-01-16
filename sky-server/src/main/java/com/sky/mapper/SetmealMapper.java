@@ -48,4 +48,12 @@ public interface SetmealMapper {
      * @param ids
      */
     void deleteByIds(List<Long> ids);
+
+    /**
+     * 根据id查询套餐
+     * @param id
+     * @return
+     */
+    @Select("SELECT s.*, c.name as category_name FROM setmeal s LEFT OUTER JOIN category c ON s.category_id = c.id WHERE s.id = #{id}")
+    SetmealVO selectById(Long id);
 }
