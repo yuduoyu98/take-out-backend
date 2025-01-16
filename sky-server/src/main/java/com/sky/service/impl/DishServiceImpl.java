@@ -56,6 +56,9 @@ public class DishServiceImpl implements DishService {
 
         // 保存口味
         List<DishFlavor> flavors = dishDTO.getFlavors();
+        if (flavors.isEmpty()) {
+            return;
+        }
         flavors.forEach(flavor -> flavor.setDishId(dishID));
         dishFlavorMapper.insertBatch(flavors);
     }
