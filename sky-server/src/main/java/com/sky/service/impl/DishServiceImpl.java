@@ -12,7 +12,7 @@ import com.sky.entity.DishFlavor;
 import com.sky.exception.DeletionNotAllowedException;
 import com.sky.mapper.DishFlavorMapper;
 import com.sky.mapper.DishMapper;
-import com.sky.mapper.DishSetmealMapper;
+import com.sky.mapper.SetmealDishMapper;
 import com.sky.result.PageResult;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
@@ -37,7 +37,7 @@ public class DishServiceImpl implements DishService {
     @Autowired
     private DishFlavorMapper dishFlavorMapper;
     @Autowired
-    private DishSetmealMapper dishSetmealMapper;
+    private SetmealDishMapper setmealDishMapper;
 
     /**
      * 保存新增菜品以及口味消息
@@ -85,7 +85,7 @@ public class DishServiceImpl implements DishService {
     @Transactional
     public void deleteDishes(List<Long> ids) {
         // 查询出在售的或者有套餐绑定的菜品信息
-        List<DishSetmealBO> dishNotDel = dishSetmealMapper.selectOnSaleInSetmealDishes(ids);
+        List<DishSetmealBO> dishNotDel = setmealDishMapper.selectOnSaleInSetmealDishes(ids);
         if (!dishNotDel.isEmpty()) {
             for (DishSetmealBO dishSetmealBO : dishNotDel) {
                 if (dishSetmealBO.getStatus() == 1) {
@@ -154,6 +154,16 @@ public class DishServiceImpl implements DishService {
             dishFlavorMapper.insertBatch(flavors);
         }
 
+    }
+
+    /**
+     * 根据分类ID查询菜品
+     * @param categoryId
+     * @return
+     */
+    @Override
+    public List<Dish> getDishesByCategory(Long categoryId) {
+        return dishMapper.selectByCategoryId(categoryId);
     }
 
 
