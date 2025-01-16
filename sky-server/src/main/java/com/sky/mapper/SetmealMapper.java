@@ -9,6 +9,8 @@ import com.sky.vo.SetmealVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface SetmealMapper {
 
@@ -33,4 +35,17 @@ public interface SetmealMapper {
      * @return
      */
     Page<SetmealVO> pageQuery(SetmealPageQueryDTO setmealPageQueryDTO);
+
+    /**
+     * 查出所给套餐中已启售的套餐id
+     * @param ids
+     * @return
+     */
+    List<Long> onSaleIds(List<Long> ids);
+
+    /**
+     * 根据ID批量删除套餐
+     * @param ids
+     */
+    void deleteByIds(List<Long> ids);
 }

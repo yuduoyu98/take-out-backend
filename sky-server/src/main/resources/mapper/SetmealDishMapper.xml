@@ -23,6 +23,13 @@
         </foreach>
     </insert>
 
+    <delete id="deleteBySetmealIds">
+        DELETE FROM setmeal_dish WHERE setmeal_id IN
+        <foreach collection="setmealIds" item="setmealId" open="(" separator="," close=")">
+            #{setmealId}
+        </foreach>
+    </delete>
+
     <select id="selectOnSaleInSetmealDishes" resultType="com.sky.bo.DishSetmealBO">
         SELECT d.id as dish_id, sd.setmeal_id as setmeal_id, d.status as status
         FROM dish d
