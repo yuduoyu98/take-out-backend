@@ -16,6 +16,7 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +34,7 @@ public class HttpClientUtil {
      * @param paramMap
      * @return
      */
-    public static String doGet(String url, Map<String, String> paramMap) {
+    public static String doGet(String url, Map<String, String> paramMap) throws URISyntaxException, IOException {
         // 创建Httpclient对象
         CloseableHttpClient httpClient = HttpClients.createDefault();
 
@@ -61,6 +62,7 @@ public class HttpClientUtil {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            throw e;
         } finally {
             try {
                 response.close();

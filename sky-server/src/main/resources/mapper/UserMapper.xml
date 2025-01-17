@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.UserMapper">
+
+    <!--
+    create table user (
+        id          bigint auto_increment comment '主键'
+            primary key,
+        openid      varchar(45) null comment '微信用户唯一标识',
+        name        varchar(32) null comment '姓名',
+        phone       varchar(11) null comment '手机号',
+        sex         varchar(2) null comment '性别',
+        id_number   varchar(18) null comment '身份证号',
+        avatar      varchar(500) null comment '头像',
+        create_time datetime null
+    )
+    -->
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user (openid, name, phone, sex, id_number, avatar, create_time)
+        VALUES (#{openid}, #{name}, #{phone}, #{sex}, #{idNumber}, #{avatar}, #{createTime})
+    </insert>
+
+</mapper>
