@@ -75,4 +75,5 @@ public interface DishMapper {
      */
     @Select("SELECT d.* FROM setmeal_dish sd LEFT OUTER JOIN dish d ON sd.dish_id = d.id WHERE sd.setmeal_id = #{setmealId}")
     List<Dish> getBySetmealId(Long setmealId);
+
 }
